@@ -13,6 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Basic R notes
 
+see:
+http://stat545.com/block002_hello-r-workspace-wd-project.html
+
 ```{r}
 # <- ## makes an assignment (kind of like giving something a name/short hand)
 objects() ## tells me what objects are in my workspace 
@@ -20,7 +23,13 @@ objects() ## tells me what objects are in my workspace
 # rm() ## will remove an object
 # rm(list = ls()) ## will remove all objects in workspace (can also do with broom in the environment)
 
+# (name <- whatever I'm naming/assigning ) putting an assignment in brackets will cause it print at the same time
 
+# q() = quit Rstudio 
+
+# getwd() = shows which working directory I"m "working in" and importantly where all the stuff I'm doing will get saved to
+
+# Rstudio projects keep all the files associated with a project organized together – input data, R scripts, analytical results, figures
 
 ```
 
