@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 see:
 http://stat545.com/block006_care-feeding-data.html
+https://bookdown.org/rdpeng/exdata (separates out many functions so it's easy to find individual ones)
 
 Start by loading my favorite packages
 
@@ -23,3 +24,31 @@ library(foreign)
 library(forcats)
 library(ggplot2)
 ```
+
+Start by exploring what is in the dataset:
+
+*only print the dataset to screen if the tidyverse is loaded (just get a tibble and not the entire thing!) OR can use as_tibble() to show something as a tibble
+
+head(): just shows the beginning 
+tail(): just shows the end
+
+str(): displays the structure of an object and will provide a sensible description of almost anything
+
+
+
+
+Some basic functions in dplyr (part of the tidyverse):
+
+select(): return a subset of the columns of a data frame, using a flexible notation
+
+filter(): extract a subset of rows from a data frame based on logical conditions
+
+arrange(): reorder rows of a data frame
+
+rename(): rename variables in a data frame
+
+mutate: add new variables/columns or transform existing variables
+
+summarise / summarize: generate summary statistics of different variables in the data frame, possibly within strata
+
+

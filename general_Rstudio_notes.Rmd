@@ -62,6 +62,8 @@ objects() ## tells me what objects are in my workspace
 
 (knitr::kable(A))
 
-
 ```
 
+Some more general Rstudio information:
+
+%>%: the “pipe” operator is used to connect multiple verb actions together into a pipeline. Once you travel down the pipeline with %>%, the first argument is taken to be the output of the previous element in the pipeline.
