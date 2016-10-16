@@ -1,0 +1,25 @@
+---
+title: "data_wrangling"
+author: "Chelsea Christie"
+date: "October 16, 2016"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Data wrangling notes
+
+see:
+http://stat545.com/block006_care-feeding-data.html
+
+Start by loading my favorite packages
+
+```{r}
+library(tidyverse)
+library(psych)
+library(foreign)
+library(forcats)
+library(ggplot2)
+```

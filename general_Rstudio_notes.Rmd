@@ -16,6 +16,22 @@ knitr::opts_chunk$set(echo = TRUE)
 see:
 http://stat545.com/block002_hello-r-workspace-wd-project.html
 
+For more tips on R markdown:
+http://stat545.com/block007_first-use-rmarkdown.html
+or
+http://r4ds.had.co.nz/r-markdown.html
+
+Start by loading my favorite packages
+
+```{r}
+library(tidyverse)
+library(psych)
+library(foreign)
+library(forcats)
+library(ggplot2)
+```
+
+
 ```{r}
 # <- ## makes an assignment (kind of like giving something a name/short hand)
 objects() ## tells me what objects are in my workspace 
@@ -30,6 +46,22 @@ objects() ## tells me what objects are in my workspace
 # getwd() = shows which working directory I"m "working in" and importantly where all the stuff I'm doing will get saved to
 
 # Rstudio projects keep all the files associated with a project organized together – input data, R scripts, analytical results, figures
+
+# It's always a good idea to test run things using fake data. To make a fake dataset:
+
+(A <- data.frame(
+        c1 = c('A', 'A', 'A', 'A', 'A', 'B', 'B'),
+        c2 = c('a', 'a', 'a', 'b', 'b', 'c', 'd'),
+        c3 = c(1, 3, 1, 1, 2, 2, 1)))
+
+# to make tables pretty, use:
+
+# knitr::kable()
+
+# For example: 
+
+(knitr::kable(A))
+
 
 ```
 
