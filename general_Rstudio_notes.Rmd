@@ -66,4 +66,8 @@ objects() ## tells me what objects are in my workspace
 
 Some more general Rstudio information:
 
+to find keyboard shortcuts press alt + shift + K
+
+
+
 %>%: the “pipe” operator is used to connect multiple verb actions together into a pipeline. Once you travel down the pipeline with %>%, the first argument is taken to be the output of the previous element in the pipeline.

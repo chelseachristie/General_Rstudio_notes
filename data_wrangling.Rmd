@@ -25,7 +25,18 @@ library(forcats)
 library(ggplot2)
 ```
 
-Start by exploring what is in the dataset:
+Start by bringing in the dataset:
+see:
+http://stat545.com/block026_file-out-in.html
+http://r4ds.had.co.nz/data-import.html
+
+If it's an excel file, use 'read_csv()'
+
+
+exploring what is in the dataset & basic functions:
+
+http://r4ds.had.co.nz/transform.html
+http://stat545.com/block009_dplyr-intro.html
 
 *only print the dataset to screen if the tidyverse is loaded (just get a tibble and not the entire thing!) OR can use as_tibble() to show something as a tibble
 
@@ -34,21 +45,22 @@ tail(): just shows the end
 
 str(): displays the structure of an object and will provide a sensible description of almost anything
 
+ncol() or nrow(): gives you # of columns or rows
 
+select(): pick variables by their names
 
-
-Some basic functions in dplyr (part of the tidyverse):
-
-select(): return a subset of the columns of a data frame, using a flexible notation
-
-filter(): extract a subset of rows from a data frame based on logical conditions
+filter(): extract a subset of rows from a data frame 
 
 arrange(): reorder rows of a data frame
 
 rename(): rename variables in a data frame
 
-mutate: add new variables/columns or transform existing variables
+mutate(): add new variables/columns or transform existing variables
 
-summarise / summarize: generate summary statistics of different variables in the data frame, possibly within strata
+summarise / summarize(): generate summary statistics of different variables in the data frame (collapse many value down to 1 single summary statistic)
+
+group_by(): changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
+
+** a nice tidy way to write longer chunks of code is with the pipe ( %>% ctr + shift + m). Think of the pipe as 'then' so you can write code with the order you want the computer to do it.
 
 
