@@ -70,4 +70,4 @@ to find keyboard shortcuts press alt + shift + K
 
 
 
-%>%: the “pipe” operator is used to connect multiple verb actions together into a pipeline. Once you travel down the pipeline with %>%, the first argument is taken to be the output of the previous element in the pipeline.
+** a nice tidy way to write longer chunks of code is with the pipe ( %>% ctr + shift + m). Think of the pipe as 'then' so you can write code with the order you want the computer to do it.

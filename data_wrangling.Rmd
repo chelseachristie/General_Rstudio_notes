@@ -52,15 +52,22 @@ select(): pick variables by their names
 filter(): extract a subset of rows from a data frame 
 
 arrange(): reorder rows of a data frame
+  -can also choose to make it ascending or descending
 
 rename(): rename variables in a data frame
 
 mutate(): add new variables/columns or transform existing variables
+  --make sure to assign the changes to the dataset or they won't 'stick' and be   
+  --if you add a variable but wish you hadn't, you can delete it this way:
+       
+        dataset name <- dataset name %>% 
+          mutate('new variable name' = NULL)
+          names(data set name)
 
 summarise / summarize(): generate summary statistics of different variables in the data frame (collapse many value down to 1 single summary statistic)
 
 group_by(): changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
 
-** a nice tidy way to write longer chunks of code is with the pipe ( %>% ctr + shift + m). Think of the pipe as 'then' so you can write code with the order you want the computer to do it.
+
 
 
