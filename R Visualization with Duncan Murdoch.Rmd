@@ -1,0 +1,131 @@
+---
+title: "R Visualization with Duncan Murdoch"
+author: "Chelsea Christie"
+date: "March 3, 2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Start by loading favorite packages
+
+```{r}
+library(tidyverse)
+library(psych)
+library(foreign)
+library(forcats)
+library(ggplot2)
+library(rgl)
+library(dagitty)
+library(ggm)
+library(BayesFactor)
+```
+
+## March 3
+
+Slides available on his website: 
+
+http://www.stats.uwo.ca/faculty/murdoch/Calgary2018/
+
+-provides history of different r graphics packages
+
+-ggplot2 came out in 2007 - Hadley Wickham used Wilkinson's ideas about grammar graphics
+----ggplot stands for grammar of graphics plot
+
+-rgl is a package for drawing 3D interactive plots (developed by Murdoch & Daniel Adler)
+----rgl stands for r graphics language
+
+-htmlwidgets allows you to connect to javascript libraries of graphics including cool mapping graphics (e.g. package called leaflet)
+
+-rcolorbrewer is a good package for finding colour palettes that are aesthetically pleasing and friendly to colour blind people 
+
+## Notes about ggplot2
+
+** Great to buy Hadley Wickham's book: ggplot2: Elegant Graphics for Data Analysis 
+Or R graphics Cookbook
+
+data: your data
+
+aesthetics: things like colour, shape, size, etc. (How your data maps to the display)
+
+layers or geoms: shapes that represent the data, produced by various functions with names like geom_X()
+
+Other ways to modify the graph:
+
+scales: how the data maps to the plot
+transformations: changes to the data
+coordinate systems
+facets: multiple plots together
+visual themes: overall styles of aesthetics 
+
+** to see all possible geoms (different plot options):
+
+ls("package:ggplot2", pattern = "^geom_")
+
+## Practicing plots using mtcars dataset
+
+```{r}
+# learn about the dataset
+?mtcars
+
+# create a basic plot (first argument = data, then first argument for aes is x axis and second argument for aes is y axis)
+ggplot(mtcars, aes(x =wt, y =mpg))
+
+# above plot has no layers (geoms) so it's blank but the coordinate system is outlined
+
+# now make it a scatterplot
+ggplot(mtcars, aes(wt, mpg)) + geom_point()
+
+# can save the base part of the plot (the first part of the plot) and then assign it a name so you can easily add to it later
+
+base_plot_wt_mpg <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+
+base_plot_wt_mpg + aes(colour = qsec)
+
+base_plot_wt_mpg + geom_point(colour = "green")
+
+# can show two geoms at once
+
+base_plot_wt_mpg + geom_density2d(colour = "white")
+
+# to pretty up the previous plot, I might want to remove the background grid lines. Can use the theme() function in order to change the general look of things. 
+
+base_plot_wt_mpg + geom_density2d(colour = "white") + geom_point() +
+theme(panel.grid = element_blank()) +
+xlab("Weight") + ylab("Miles per gallon")
+
+# some other theme tips -- can use theme_dark() to get a dark background 
+# last_plot() can also be used to pull up everything from the previous plot & then try out an additional thing
+
+# faceting is a way to show multiple plots, can use facet_wrap to show multiple plots beside each other, or facet_grid to show multiple plots with the rows and columns to be the same variable
+
+# ~ is used to remember a formula 
+
+```
+
+## some other ggplot2 notes
+
+Other useful functions:
+
+labs(), ggtitle(): modify labels on plots.
+annotation_*(): add notes to plots
+coord_*() functions change the display from the default Cartesian coordinates, e.g. to map projections
+draw_key*() functions draw elements in legends
+
+## Now moving onto 3D plots using rgl
+
+```{r}
+
+# can use rglwidget() to view the plot
+
+library(rgl)
+options(rgl.useNULL = TRUE)
+plot3d(iris, col = as.numeric(iris$Species), type = "s")
+rglwidget()
+
+cybera.sy.gy.za.ca
+
+```
+

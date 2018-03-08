@@ -9,22 +9,328 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Jan. 23, 2017
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+rm(months_chelsea_has_lived)
+rm(x,y)
+seq(1,100)
+months_chelsea_has_lived <- 314
+
+data("mtcars")
+mtcars
+
+library(tidyverse)
+View(mtcars)
+View(x= mtcars, title = "Motor Trend")
+
+help(View)
+?View
+
+str(mtcars)
+rownames(mtcars)
+dim(mtcars)
+
+summary(mtcars)
+
+library(dplyr)
+library(help="dplyr")
+
+sapply(mtcars, mean)
+min(mtcars$mpg)
+quantile(mtcars$mpg, probs = .5)
+quantile(mtcars$mpg, probs = c(0, 1, .7, .9))
+table(mtcars$gear)
+xtabs(~cyl, data = mtcars)
+xtabs(~cyl+gear, data = mtcars)
+lm(mpg~ cyl + disp, data = mtcars)
+# above line gives the linear regression showing the relationship between number of cylinders and miles per gallon. The criterion variables get listed first.
+
+sapply(mtcars, quantile, probs = c(.25, .75))
+
+sapply(mtcars[,c("mpg", "disp")], quantile, probs = c(.25, .75))
+
 ```
 
-## Including Plots
+Objects can not start with underscores or numbers and they are case-senstive. When creating an object that is composed of letters you have to put "" around the word(s). []s tell you which place the object is within the vector. So if you have a list of 10 numbers in chronological order, [4] is 4. To clear console = "ctrl + l ". 
 
-You can also embed plots, for example:
+# Getting help with functions
+To get more information about a function, use "help(function name)" or "?function name". Have to respect the order of arguments within functions unless you specifically name the argument (e.g. title comes second in view but you could put it first if you type "title = whatever the title is").
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+-to get number of rows and columns = dim(data file name) OR ncol() and nrow()
+
+# some notes about vectors
+
+-vectorization means that when you do something to one thing in the dataframe it will happen to every item in the vector. So you can easily square or transform every point in the dataframe.
+
+mean(), sd() = standard deviation, 
+sapply(dataframe, whatever you want applied) -e.g. sapply(mtcars, mean) will give you the mean for every variable within the vector
+lm() = linear model, use for regression
+
+# To subset to specific columns, can use square brackets e.g. [,c("variable one", "variable 2")]
+
+## Jan. 25, 2017 - ggplot2
+
+```{r}
+
+library(tidyverse)
+library(ggplot2)
+
+?mpg
+
+p <- ggplot(data = mpg,
+       aes(x = displ, y = cty, color = class)) +
+  geom_point()
+
+p
+
+#ggsave("plot1.pdf")
+
+# can also pick the colors you want
+
+p2 <- ggplot(data = mpg,
+       aes(x = displ, y = cty)) +
+  geom_point(color = 'skyblue')
+
+p2
+
+# to see all colours - just google it or can do 
+
+#colors()
+
+# non data elements get changed through the 'theme' function
+
+?theme
+
+
+ggplot(mpg, aes(x = cty)) +
+  geom_histogram(bins = 20)
+
+
+ggplot(mpg, aes(x = factor(cyl), y = cty)) +
+  geom_boxplot()
+
+# to order the elements in the graph - use 'reorder'  - ex. below
+
+ggplot(mpg, aes(x = reorder(drv, cty, median),
+                y = cty)) +
+  geom_boxplot()
+
+# or can tell it exactly the order to put things in by using 'levels =c()
+
+ggplot(mpg, aes(x = factor(drv,levels = c("f", "r", "4")),
+                y = cty)) +
+  geom_boxplot()
+
+ggplot(economics,
+       aes(y = unemploy, x = date)) +
+  geom_line() +
+  geom_smooth()
+
+# to get rid of the confidence interval on the geom_smooth() - use se = FALSE
+# or to add a regression line - use method ="lm"
+
+ggplot(economics,
+       aes(y = unemploy, x = date)) +
+  geom_line(color = "red") +
+  geom_smooth(se=FALSE, method ="lm", color = "black")
+
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point(aes(color = factor(cyl))) +
+  geom_smooth(aes(y = cty), se = FALSE) +
+  labs(title = "Highway fuel consumption",
+       x= "displacement",
+       y= "highway mpg")
+
+# to add titles use 'ggtitle()' as another layer
+# to change labels use 'labs() as another layer
+
+library(gapminder)
+?gapminder
+
+ggplot(gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(aes(color = factor(continent), alpha = 0.5))
+
+# alpha - makes things more or less transparent
+
+ggplot(mpg, aes(displ, hwy, color = factor(cyl))) +
+  geom_point() +
+    facet_wrap(~manufacturer)
+
+#use position to play around with where your datapoints go. e.g position dodge so bar charts don't overlap, or position nudge to make sure label points are not over top of the data points
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Jan 27 - dyplr functions - organizing data
+
+```{r}
+
+library(tidyverse)
+
+###### Select - for choosing columns 
+
+# to look at just two variables - use select()
+
+select(mtcars, wt, mpg)
+
+# or just variables that start with 'd'
+
+select(mtcars, starts_with("d"))
+
+# can also use 'ends_with or contains
+# can also put one variable at the front by listing it first and then everything
+
+select(mtcars,wt, everything())
+
+
+##### Filter - for choosing rows or observations
+
+filter(mtcars, cyl ==8)
+
+# one equals sign means you're assigning an argument to a function (like using <- ) but use a double equals sign to demonstrate that you want values to be equal to something. So in the above example I am saying return all cylinders that are 8 and NOT making a new object - like one = sign would suggest.
+
+# can use other logical arguments- like less than 
+
+filter(mtcars, cyl <8)
+
+# if you want to keep the row names in the output you have to use add_rownames
+
+filter(rownames_to_column(mtcars), cyl < 8)
+
+## to combine filter & select
+# ex. choose all cars with 8 cylinders and
+
+df <- filter(mtcars, cyl == 8)
+
+select(df, disp, wt)
+
+?mtcars
+
+## Exercise 
+
+filter(mtcars, am == 1)
+
+cars_with_5_gears_or_manual_transmission <- filter(mtcars, gear == 5 | am == 1)
+
+select(cars_with_5_gears_or_manual_transmission, mpg, wt)
+
+
+select(filter(mtcars, am == 1), qsec)
+
+
+###### The pipe!!!
+
+mtcars %>% 
+  filter(am == 1) %>% 
+  select(qsec)
+
+
+## think of the pipe as 'insert' - where everything to the left of the pipe gets inserted into the first argument of the next function
+
+#### Arrange - sorting your dataframe 
+
+arrange(mtcars, mpg)
+arrange(mtcars, desc(mpg))
+
+mtcars %>% 
+  arrange(cyl, carb)
+
+mtcars %>% 
+  arrange(desc(mpg & disp))
+
+?nycflights13
+
+install.packages("nycflights13")
+library(nycflights13)
+
+?nycflights13
+
+str(flights)
+?flights
+
+glimpse(flights)
+
+# when saying you DON'T want certain variables you can use the minus sign in front of it.
+
+flights %>% 
+  filter(day == 2, month == 1) %>% 
+  select(-month, -year, -day) %>% 
+  glimpse()
+
+    
+# which flights are the most delayed?
+
+flights %>% 
+  arrange(desc(arr_delay)) %>% 
+  head()
+
+# which flights caught up the most time over flights (looking at difference between departure delay and arrival delay)
+
+flights %>% 
+  arrange(desc(dep_delay - arr_delay)) %>% 
+  select(carrier)
+
+# transmute will mutate old variables into new ones AND delete the old ones
+
+mtcars %>% 
+  transmute(disp_1 = disp/61.0237)
+
+mtcars %>% 
+  mutate(wt_in_tonnes = wt/2204.6)
+
+#### summmarize function - compute things for a variable
+
+mtcars %>% 
+  summarize(mean(mpg), med_wt = median(wt))
+
+## group by - used to do operations for certain parts of your data
+
+mtcars %>% 
+  group_by(cyl) %>% 
+  summarize(mean_mpg = mean(mpg), med_wt= median(wt))
+
+# can also group by more than one variable
+
+mtcars %>% 
+  group_by(am, cyl) %>% 
+  summarize(mean_mpg = mean(mpg), med_wt= median(wt))
+
+mtcars %>% 
+  group_by(am, vs) %>% 
+  summarize(min(disp), max(disp))
+
+
+?flights
+
+flights %>%
+  mutate(speed_mph = distance/(air_time/60)) %>% 
+  select(speed_mph, flight) %>% 
+  arrange(desc(speed_mph)) %>% 
+  head()
+
+### another tip about pipes
+
+boxplot(mpg~cyl, data = filter(mtcars, cyl < 8))
+
+mtcars %>% 
+  filter(cyl <8) %>% 
+  boxplot(mpg~cyl, data =.)
+
+?boxplot
+
+## if you want to use a pipe but the function you are using does not use data as the first argument - you can use 'data =.' to indicate that the data you want to use is the one you listed higher up in the pipe.
+
+# exercise: which destinations have the hightest average delays
+?flights
+
+flights %>% 
+  group_by(dest) %>% 
+  summarize(delay = mean(arr_delay, na.rm = TRUE)) %>% 
+  arrange(desc(delay))
+
+# na.rm = NA remove. so missing values will be excluded when calculating the average.
+
+```
+
